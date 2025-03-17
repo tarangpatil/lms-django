@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .models import User, InstructorProfile
+from .models import User, InstructorProfile, StudentProfile
 
 
 def home_page(req):
     context = {"user": None}
     if req.user.is_authenticated:
         context["user"] = req.user
+        user_ins = InstructorProfile.objects.filter(user__email=req.user.email)
+        user_std = StudentProfile.objects.filter(user__email=req.user.email)
+        if user_ins.count() == 1:
+            context["user_type"] = "instructor"
+        elif user_std.count() == 1:
+            context["user_type"] = "student"
     return render(req, "users/home_page.html", context=context)
 
 
@@ -26,7 +32,6 @@ def login_user(req):
         else:
             return redirect("login")
     else:
-        print("AUTH", req.user)
         return render(req, "users/login.html")
 
 
