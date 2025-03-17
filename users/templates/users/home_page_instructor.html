@@ -1,20 +1,43 @@
 <main class="container my-4">
   <h1>Welcome, {{ user.first_name }}</h1>
-  <h4 class="mt-4">Continue building course...</h4>
-  <section class="row g-4 justify-content-start">
-    {% comment %} {% for course in list %}
-    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+  <section class="mt-4 g-4 justify-content-start">
+    <h4>Continue building course...</h4>
+    <div class="row">
+      {% for course in unpublished_courses_set %}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ course.name }}</h5>
+            <p class="card-text">{{ course.description }}</p>
+            <p class="card-text text-secondary">Unpublished</p>
+            <a href="/" class="btn btn-primary">Edit</a>
+            <form style="display: inline-block">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    {% endfor %} {% endcomment %}
+    {% endfor %}
+  </section>
+  <section class="mt-4 g-4 justify-content-start">
+    <h4>Your courses</h4>
+    <div class="row">
+      {% for course in published_courses_set %}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ course.name }}</h5>
+            <p class="card-text">{{ course.description }}</p>
+            <p class="card-text text-secondary user-select-none">
+              Published Date: {{ course.published_date }}
+            </p>
+            <a href="/" class="btn btn-primary">Edit</a>
+            <a href="/" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
   </section>
 </main>

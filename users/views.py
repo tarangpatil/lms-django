@@ -11,6 +11,12 @@ def home_page(req):
         user_std = StudentProfile.objects.filter(user__email=req.user.email)
         if user_ins.count() == 1:
             context["user_type"] = "instructor"
+            context["unpublished_courses_set"] = user_ins[0].course_set.filter(
+                published_date__isnull=True
+            )
+            context["published_courses_set"] = user_ins[0].course_set.filter(
+                published_date__isnull=False
+            )
         elif user_std.count() == 1:
             context["user_type"] = "student"
     return render(req, "users/home_page.html", context=context)
@@ -32,6 +38,8 @@ def login_user(req):
         else:
             return redirect("login")
     else:
+        if req.user.is_authenticated:
+            return redirect("home_page")
         return render(req, "users/login.html")
 
 
