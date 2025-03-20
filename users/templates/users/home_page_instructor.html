@@ -1,24 +1,29 @@
 <main class="container my-4">
-  <h1>Welcome, {{ user.first_name }}</h1>
-  <section class="mt-4 g-4 justify-content-start">
-    <h4>Continue building course...</h4>
+  <div class="d-flex align-items-center justify-content-between">
+    <h1>Welcome, {{ user.first_name }}</h1>
+    <a href="/course/create" class="btn btn-outline-success">
+      Create new course
+    </a>
+  </div>
+  <section class="mt-4 g-4 justify-content-between">
     <div class="row">
+      <h4>Continue building course...</h4>
       {% for course in unpublished_courses_set %}
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-2">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ course.name }}</h5>
             <p class="card-text">{{ course.description }}</p>
             <p class="card-text text-secondary">Unpublished</p>
-            <a href="/" class="btn btn-primary">Edit</a>
-            <form style="display: inline-block">
-              <button class="btn btn-danger">Delete</button>
-            </form>
+            <div class="btn-group">
+              <a href="/" class="btn btn-primary">Edit</a>
+              {% comment %} <a href="{% url "course_details" pk=course.id %}" class="btn btn-success">Go to course</a> {% endcomment %}
+            </div>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </section>
   <section class="mt-4 g-4 justify-content-start">
     <h4>Your courses</h4>

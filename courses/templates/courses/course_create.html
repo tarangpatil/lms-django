@@ -1,0 +1,36 @@
+{% extends "users/base.html" %} {% block content %}
+<div class="container">
+  <form action='{% url "course_create" %}' method="post" class="form my-4">
+    {% csrf_token %}
+    <div class="form-floating mb-4">
+      <input
+        id="course-name"
+        type="text"
+        name="course-name"
+        class="form-control"
+        placeholder="Course name"
+        minlength="5"
+        required
+      />
+      <label for="course-name">Course name</label>
+    </div>
+    <div class="form-floating">
+      <textarea
+        id="course-description"
+        name="course-description"
+        class="form-control"
+        minlength="20"
+        maxlength="255"
+        style="height: 6rem"
+        required
+      ></textarea>
+      {% comment %} This introductory C++ course covers basic programming
+      concepts including variables, control structures, functions, arrays, and
+      object-oriented programming. Students will develop foundational coding
+      skills to write and debug simple C++ programs {% endcomment %}
+      <label for="course-description">Course description</label>
+    </div>
+    <button type="submit" class="btn btn-primary my-4">Create</button>
+  </form>
+</div>
+{% endblock %}
