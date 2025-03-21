@@ -16,8 +16,12 @@
             <p class="card-text">{{ course.description }}</p>
             <p class="card-text text-secondary">Unpublished</p>
             <div class="btn-group">
-              <a href="/" class="btn btn-primary">Edit</a>
-              {% comment %} <a href="{% url "course_details" pk=course.id %}" class="btn btn-success">Go to course</a> {% endcomment %}
+              <a
+                href='{% url "course_edit" pk=course.id %}'
+                class="btn btn-primary"
+              >
+                Edit
+              </a>
             </div>
           </div>
         </div>

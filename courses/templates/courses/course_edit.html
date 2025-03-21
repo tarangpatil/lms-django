@@ -1,0 +1,69 @@
+{% extends "users/base.html" %} {% block content %}
+<div class="container my-4">
+  <h4>Editing course "{{course.name}}"</h4>
+  <form class="my-3" id="edit-form">
+    {% csrf_token %}
+    <label for="course-name">Course name:</label>
+    <input
+      id="course-name"
+      type="text"
+      class="form-control mb-2"
+      value="{{course.name}}"
+    />
+    <label for="course-description">Coures description:</label>
+    <textarea
+      id="course-description"
+      name="course-description"
+      class="form-control mb-2"
+      minlength="20"
+      maxlength="255"
+      style="height: 6rem"
+      required
+    ></textarea>
+    <div>
+      <input id="publish" type="checkbox" name="publish" />
+      <label for="publish" class="user-select-none">Publish?</label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save changes</button>
+  </form>
+  <script>
+    document.querySelector("textarea").value = "{{course.description}}";
+    const form = document.forms[1];
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const course_name = form["course-name"].value;
+      const course_description = form["course-description"].value;
+      const toPublish = form["publish"].checked;
+      const csrfmiddlewaretoken = form["csrfmiddlewaretoken"].value;
+      console.log({
+        course_name,
+        course_description,
+        toPublish,
+        csrfmiddlewaretoken,
+      });
+
+      fetch('{% url "course_edit" pk=course.id %}', {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfmiddlewaretoken,
+        },
+        body: JSON.stringify({
+          course_name,
+          course_description,
+          toPublish,
+        }),
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res.url);
+            window.location.assign(res.url);
+          }
+        })
+        .catch(console.error);
+    });
+  </script>
+</div>
+{% endblock content %}
