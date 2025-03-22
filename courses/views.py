@@ -47,15 +47,24 @@ def course_edit(req, pk):
             PUT_BODY = json.loads(req.body)
         except json.JSONDecodeError:
             return HttpResponse("Invalid JSON data", status=400)
-        
+
         course_name = PUT_BODY["course_name"]
         course_description = PUT_BODY["course_description"]
         to_publish = PUT_BODY["toPublish"]
         course.name = course_name
         course.description = course_description
         course.save()
-        
+
         if to_publish:
             course.publish()
         return redirect("home_page")
     return render(req, "courses/course_edit.html", {"course": course})
+
+
+def course_details(req, pk):
+    course = get_object_or_404(Course, pk=pk)
+    return render(
+        req,
+        "courses/course_details.html",
+        {"course": course, "chapter": "Introduction to the Computer!"},
+    )

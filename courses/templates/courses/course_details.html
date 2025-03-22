@@ -1,0 +1,11 @@
+{% extends "users/base.html" %} {% block content %}
+<div class="container my-4">
+  <h2 class="text-center">{{course.name}}</h2>
+  <h5 class="mx-2 my-3">Chapters</h5>
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action py-3">
+      {{chapter}}
+    </a>
+  </div>
+</div>
+{% endblock content %}

@@ -22,6 +22,12 @@
               >
                 Edit
               </a>
+              <a
+                href='{% url "course_details" pk=course.id %}'
+                class="btn btn-info"
+              >
+                Go to course
+              </a>
             </div>
           </div>
         </div>
@@ -33,20 +39,32 @@
     <h4>Your courses</h4>
     <div class="row">
       {% for course in published_courses_set %}
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-2">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ course.name }}</h5>
             <p class="card-text">{{ course.description }}</p>
-            <p class="card-text text-secondary user-select-none">
-              Published Date: {{ course.published_date }}
+            <p class="card-text text-secondary">
+              Published: {{course.published_date}}
             </p>
-            <a href="/" class="btn btn-primary">Edit</a>
-            <a href="/" class="btn btn-danger">Delete</a>
+            <div class="btn-group">
+              <a
+                href='{% url "course_edit" pk=course.id %}'
+                class="btn btn-primary"
+              >
+                Edit
+              </a>
+              <a
+                href='{% url "course_details" pk=course.id %}'
+                class="btn btn-info"
+              >
+                Go to course
+              </a>
+            </div>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </section>
 </main>

@@ -38,15 +38,3 @@ class Course(models.Model):
             self.published_date = timezone.now().date()
             self.save()
         return
-
-
-class Chapter(models.Model):
-    name = models.TextField(
-        "Chapter Name",
-        max_length=255,
-        null=False,
-        validators=[
-            MinLengthValidator(5, "Chapter name must be atleast 5 characters.")
-        ],
-    )
-    course = models.ForeignKey(Course, null=False, on_delete=models.CASCADE)
