@@ -20,10 +20,12 @@
       style="height: 6rem"
       required
     ></textarea>
+    {% if course.published_date is None %}
     <div>
       <input id="publish" type="checkbox" name="publish" />
       <label for="publish" class="user-select-none">Publish?</label>
     </div>
+    {% endif %}
     <button type="submit" class="btn btn-primary mt-3">Save changes</button>
   </form>
   <script>
