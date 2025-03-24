@@ -3,21 +3,33 @@
   <h2 class="text-center">{{course.name}}</h2>
   <h5 class="mx-2 my-3">Chapters</h5>
   {% for chapter in chapters %}
-  <ul class="list-group list-group-horizontal my-2">
-    <li class="list-group-item d-flex flex-column align-items-center">
+  <div class="list-group list-group-horizontal my-2">
+    <div class="list-group-item d-flex flex-column align-items-center">
       {% if chapter.chapter_no != 1 %}
-      <form>
-        <button class="btn btn-outline-secondary mb-1">&uarr;</button>
+      <form
+        action='{% url "reorder_chapter_up" chapter_pk=chapter.id %}'
+        method="post"
+      >
+        {% csrf_token %}
+        <button class="btn btn-outline-secondary my-1">&uarr;</button>
       </form>
       {% endif %} {% if chapter.chapter_no != last_chapter_no %}
-      <button class="btn btn-outline-secondary">&darr;</button>
+      <form
+        action='{% url "reorder_chapter_down" chapter_pk=chapter.id %}'
+        method="post"
+      >
+        {% csrf_token %}
+        <button class="btn btn-outline-secondary mb-1">&darr;</button>
+      </form>
       {% endif %}
-    </li>
-    <li class="list-group-item flex-fill d-flex align-items-center">
+    </div>
+    <a href="/" class="list-group-item flex-fill d-flex align-items-center">
       {{chapter.name}}
-    </li>
-  </ul>
-  {% endfor %} {% if len(chapters) == 0 %} No chapters so far! {% endif %}
+    </a>
+  </div>
+  {% endfor %} {% if not chapters %}
+  <p class="">No chapters so far!</p>
+  {% endif %}
   <form
     action='{% url "create_chapter" course_pk=course.id %}'
     method="post"
@@ -25,7 +37,7 @@
   >
     {% csrf_token %}
     <label for="new-chapter-input" class="form-label">
-      Insert new chapter:
+      <h5>Insert new chapter:</h5>
     </label>
     <div class="input-group mb-3">
       <input
