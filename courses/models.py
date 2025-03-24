@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MinLengthValidator
 from datetime import date
+from users.models import InstructorProfile
 
 
 # Create your models here.
@@ -20,7 +21,7 @@ class Course(models.Model):
         ],
     )
     author = models.ForeignKey(
-        "users.InstructorProfile",
+        InstructorProfile,
         verbose_name="Course Author",
         on_delete=models.CASCADE,
     )

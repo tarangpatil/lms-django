@@ -2,10 +2,52 @@
 <div class="container my-4">
   <h2 class="text-center">{{course.name}}</h2>
   <h5 class="mx-2 my-3">Chapters</h5>
-  <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action py-3">
-      {{chapter}}
-    </a>
-  </div>
+  {% for chapter in chapters %}
+  <ul class="list-group list-group-horizontal my-2">
+    <li class="list-group-item d-flex flex-column align-items-center">
+      {% if chapter.chapter_no != 1 %}
+      <form>
+        <button class="btn btn-outline-secondary mb-1">&uarr;</button>
+      </form>
+      {% endif %} {% if chapter.chapter_no != last_chapter_no %}
+      <button class="btn btn-outline-secondary">&darr;</button>
+      {% endif %}
+    </li>
+    <li class="list-group-item flex-fill d-flex align-items-center">
+      {{chapter.name}}
+    </li>
+  </ul>
+  {% endfor %} {% if len(chapters) == 0 %} No chapters so far! {% endif %}
+  <form
+    action='{% url "create_chapter" course_pk=course.id %}'
+    method="post"
+    class="form my-3"
+  >
+    {% csrf_token %}
+    <label for="new-chapter-input" class="form-label">
+      Insert new chapter:
+    </label>
+    <div class="input-group mb-3">
+      <input
+        id="new-chapter-input"
+        type="text"
+        class="form-control py-3"
+        name="chapter-name"
+        placeholder="New chapter name"
+        minlength="5"
+        maxlength="255"
+        required
+        aria-label="New chapter name"
+        aria-describedby="new-chapter-button"
+      />
+      <button
+        class="btn btn-outline-success"
+        type="submit"
+        id="new-chapter-button"
+      >
+        Button
+      </button>
+    </div>
+  </form>
 </div>
 {% endblock content %}

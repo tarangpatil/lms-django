@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from users.models import InstructorProfile
 from .models import Course
+from chapters.models import Chapter
 
 
 # Create your views here.
@@ -63,8 +64,9 @@ def course_edit(req, pk):
 
 def course_details(req, pk):
     course = get_object_or_404(Course, pk=pk)
-    return render(
-        req,
-        "courses/course_details.html",
-        {"course": course, "chapter": "Introduction to the Computer!"},
-    )
+    chapters = Chapter.objects.filter(course=course).order_by("chapter_no")
+    context = {"course": course}
+    context["chapters"] = chapters
+    if chapters.count() != 0:
+        context["last_chapter_no"] = chapters[len(chapters) - 1].chapter_no
+    return render(req, "courses/course_details.html", context=context)
