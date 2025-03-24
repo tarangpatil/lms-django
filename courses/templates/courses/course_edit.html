@@ -27,6 +27,54 @@
     </div>
     {% endif %}
     <button type="submit" class="btn btn-primary mt-3">Save changes</button>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-danger mt-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Delete Course
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the course <br />
+            <strong>"{{course.name}}"</strong>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button id="delete-course" type="button" class="btn btn-danger">
+              Delete Course
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
   <script>
     document.querySelector("textarea").value = "{{course.description}}";
@@ -65,6 +113,14 @@
           }
         })
         .catch(console.error);
+    });
+    document.querySelector("#delete-course").addEventListener("click", (e) => {
+      fetch('{% url "delete_course" pk=course.id %}').then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          window.location.assign(res.url);
+        }
+      });
     });
   </script>
 </div>

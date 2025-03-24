@@ -70,3 +70,12 @@ def course_details(req, pk):
     if chapters.count() != 0:
         context["last_chapter_no"] = chapters[len(chapters) - 1].chapter_no
     return render(req, "courses/course_details.html", context=context)
+
+
+@login_required
+def delete_course(req, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if course.author.user.id != req.user.id:
+        return HttpResponse("Unauthorized", status=401)
+    course.delete()
+    return redirect("home_page")
