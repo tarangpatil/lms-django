@@ -3,6 +3,7 @@ from . import views
 
 # chapter/
 urlpatterns = [
+    path("<int:pk>/", views.chapter_details, name="chapter_details"),
     path("create/<int:course_pk>", views.create_chapter, name="create_chapter"),
     path(
         "reorder-chapter-down/<int:chapter_pk>",

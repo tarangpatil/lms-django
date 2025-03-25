@@ -1,0 +1,15 @@
+{% extends "users/base.html" %} {% block content %}
+<div class="container my-4">
+  <h2 class="text-center">{{chapter.name}}</h2>
+  <h5 class="mx-2 my-3">Pages</h5>
+  {% for page in pages %}
+  <div class="list-group list-group-horizontal my-2">
+    <a href="#" class="list-group-item flex-fill d-flex align-items-center">
+      {{page.name}}
+    </a>
+  </div>
+  {% endfor %} {% if not pages %}
+  <p class="">No pages so far!</p>
+  {% endif %}
+</div>
+{% endblock content %}

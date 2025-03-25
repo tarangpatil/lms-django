@@ -65,3 +65,20 @@ def reorder_chapter_up(req, chapter_pk):
     prev_chapter.chapter_no = curr_chapter.chapter_no + 1
     prev_chapter.save()
     return redirect("course_details", pk=curr_chapter.course.id)
+
+
+@login_required
+def chapter_details(req, pk):
+    chapter = get_object_or_404(Chapter, pk=pk)
+    return render(
+        req,
+        "chapters/chapter_details.html",
+        {
+            "chapter": chapter,
+            "pages": [
+                {"name": "WHAT IS RUST??"},
+                {"name": "WHAT IS RUST??"},
+                {"name": "WHAT IS RUST??"},
+            ],
+        },
+    )

@@ -23,7 +23,10 @@
       </form>
       {% endif %}
     </div>
-    <a href="/" class="list-group-item flex-fill d-flex align-items-center">
+    <a
+      href='{% url "chapter_details" pk=chapter.id %}'
+      class="list-group-item flex-fill d-flex align-items-center"
+    >
       {{chapter.name}}
     </a>
   </div>
